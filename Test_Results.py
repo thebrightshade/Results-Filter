@@ -11,6 +11,13 @@ import os
 import sys
 import time
 
+
+'''Keywords for inOS AWC testing and Karnak Setup testing, need to define arguments for these.'''
+#keyword_success = "setupcomplete: time to complete"
+keyword_success = "SUCCESSFUL AWC INSTALL!!!"
+#keyword_total = "connect: time to complete"
+keyword_total = ": opening modern"
+
 '''We are defining our function result_filter, which is called upon the path that will be provided by the user as an argument,
 we are calling that argument "path_provided".'''
 def result_filter(path_provided):
@@ -30,9 +37,9 @@ def result_filter(path_provided):
         if file.endswith(".log"):
             with open(path_provided + file, "r") as openfile:
                 for line in openfile:
-                    if "connect: time to complete" in line:
+                    if keyword_total in line:
                         total += 1
-                    if "setupcomplete: time to complete" in line:
+                    if keyword_success in line:
                         success += 1
         
         
