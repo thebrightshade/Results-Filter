@@ -30,6 +30,8 @@ def result_filter(path_provided):
     '''We are going through the directory and creating a list of files/folders 
     in the directory for which the path was provided by the user'''
     for file in os.listdir(path_provided):
+
+        '''We are setting a couple variables, "folder" and "test" to add to the output filename, these are extracted from the path provided.'''
         folder = path_provided.split('\\')[-3]
         test = path_provided.split('\\')[-2]
         if test == "WindowsAddPrn":
