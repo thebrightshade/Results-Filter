@@ -13,14 +13,14 @@ import time
 
 
 '''Keywords for inOS AWC testing and Karnak Setup testing, need to define arguments for these.'''
-#keyword_success = "setupcomplete: time to complete"
-keyword_success = "SUCCESSFUL AWC INSTALL!!!"
-#keyword_total = "connect: time to complete"
-keyword_total = ": opening modern"
+karnak_success = "setupcomplete: time to complete"
+inOS_success = "SUCCESSFUL AWC INSTALL!!!"
+karnak_total = "connect: time to complete"
+inOS_total = ": opening modern"
 
 '''We are defining our function result_filter, which is called upon the path that will be provided by the user as an argument,
 we are calling that argument "path_provided".'''
-def result_filter(path_provided):
+def result_filter(path_provided, test_type):
 
     '''Setting variable success equal to 0'''
     success = 0
@@ -29,11 +29,18 @@ def result_filter(path_provided):
     
     '''We are going through the directory and creating a list of files/folders 
     in the directory for which the path was provided by the user'''
-    for file in os.listdir(path_provided):
+    for file in os.listdir(path_provided, test_type):
 
         '''Filtering for files which end in .log extension and then opening those files and iterating through it line by line 
         and if the keyword which confirms that an install was attempted is found, value of "total" is increased by +1,
         if keyword confirming success is found, value for "success" is increased by +1'''
+        if test_type == "karnak".upper():
+            keyword_success = karnak_success
+            keyword_total = karnak_total
+        else:
+            keyword_success = inOS_success
+            keyword_total = inOS_total
+            pass
         if file.endswith(".log"):
             with open(path_provided + file, "r") as openfile:
                 for line in openfile:
