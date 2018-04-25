@@ -57,7 +57,7 @@ def result_filter(path_provided):
                     if fileNowOpen.find(keyword_success) != -1:
                         success += 1
                         result_file.writelines(file + '     1 \n')
-                    elif fileNowOpen.find(keyword_success) == -1:
+                    elif fileNowOpen.find(keyword_success) == -1 and fileNowOpen.find(keyword_total) != -1:
                         result_file.writelines(file + '     0 \n')
         
         
@@ -85,9 +85,7 @@ def main():
     p = sys.argv[1]
     print(p)
     time.sleep(5)
-    r = result_filter(p)[0]
-    f = result_filter(p)[1]
-    t = result_filter(p)[2]
+    r,f,t = result_filter(p)
     write_results(r, f, t)
     print (sys.argv)
     time.sleep(5)
