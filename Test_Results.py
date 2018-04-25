@@ -13,14 +13,14 @@ import time
 
 
 '''Keywords for inOS AWC testing and Karnak Setup testing, need to define arguments for these.'''
-karnak_success = "setupcomplete: time to complete"
-inOS_success = "SUCCESSFUL AWC INSTALL!!!"
-karnak_total = "connect: time to complete"
-inOS_total = ": opening modern"
+#keyword_success = "setupcomplete: time to complete"
+keyword_success = "SUCCESSFUL AWC INSTALL!!!"
+#keyword_total = "connect: time to complete"
+keyword_total = ": opening modern"
 
 '''We are defining our function result_filter, which is called upon the path that will be provided by the user as an argument,
 we are calling that argument "path_provided".'''
-def result_filter(path_provided, test_type):
+def result_filter(path_provided):
 
     '''Setting variable success equal to 0'''
     success = 0
@@ -29,18 +29,17 @@ def result_filter(path_provided, test_type):
     
     '''We are going through the directory and creating a list of files/folders 
     in the directory for which the path was provided by the user'''
-    for file in os.listdir(path_provided, test_type):
+    for file in os.listdir(path_provided):
+        folder = path_provided.split('\\')[-3]
+        test = path_provided.split('\\')[-2]
+        if test == "WindowsAddPrn":
+            test = "Setup_inOS"
+        elif test == "Karnak-Auto":
+            test = "Setup_Karnak"
 
         '''Filtering for files which end in .log extension and then opening those files and iterating through it line by line 
         and if the keyword which confirms that an install was attempted is found, value of "total" is increased by +1,
         if keyword confirming success is found, value for "success" is increased by +1'''
-        if test_type == "karnak".upper():
-            keyword_success = karnak_success
-            keyword_total = karnak_total
-        else:
-            keyword_success = inOS_success
-            keyword_total = inOS_total
-            pass
         if file.endswith(".log"):
             with open(path_provided + file, "r") as openfile:
                 for line in openfile:
@@ -56,12 +55,12 @@ def result_filter(path_provided, test_type):
     
     '''We set the variable "Results" in the output format that we want, i.e. Pass: success/total and then we return the "Results" when our function is called.'''
     Results = ("Pass: " + str(success) + "/" + str(total))
-    return Results
+    return Results, folder, test
 
 
 '''Defining the function write_results, which writes the results to a file named Results.txt'''
-def write_results(Results):
-    with open("Result.txt", "w") as result_file:
+def write_results(Results, folder, test):
+    with open(test + "_" + folder + "_Result.txt", "w") as result_file:
         result_file.write(Results)
 
 
@@ -74,8 +73,10 @@ def main():
     p = sys.argv[1]
     print(p)
     time.sleep(5)
-    r = result_filter(p)
-    write_results(r)
+    r = result_filter(p)[0]
+    f = result_filter(p)[1]
+    t = result_filter(p)[2]
+    write_results(r, f, t)
     print (sys.argv)
     time.sleep(5)
     
