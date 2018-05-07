@@ -82,6 +82,13 @@ def result_filter(path_provided, keyword_success, keyword_total, test, folder):
                                         line.split("print time: ")[1])
                                     result_file.writelines(
                                         file + ', 1, ' + print_time)
+                        if fileNowOpen.find("TimeToConn:") != -1:
+                            for line in openfile:
+                                if "TimeToConn:" in line:
+                                    print_time = (
+                                        line.split("TimeToConn: ")[1])
+                                    result_file.writelines(
+                                        file + ', 1, ' + print_time)
                         else:
                             result_file.writelines(file + ', 1\n')
 
