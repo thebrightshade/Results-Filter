@@ -109,7 +109,7 @@ def result_filter(path_provided, keyword_success, keyword_total, test, folder):
                             # ==> FAILURE!!! Printer not on NW
                             # -> Printer on NW but not added
                             # ==> FAILURE!!! Printer on NW
-                            print_add_pic = '''print_add_pic: clicked succussfully'''
+                            print_add_pic = 'print_add_pic: clicked succussfully'
                             refresh_pic = 'refresh: clicked succussfully'
                             if fileNowOpen.find(print_add_pic) != -1:
                                 failReason = 'ADD PRINTER FAILED - FAILURE!!!'
