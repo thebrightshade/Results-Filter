@@ -101,10 +101,14 @@ def result_filter(path_provided, keyword_success, keyword_total, test, folder):
                         elif fileNowOpen.find(keyword_success) == -1:
                             failReason = ''
                             # Reason for Failure
-                            # --> Refresh Image not found ==> Script Failure, Refresh Button wasn't clicked
-                            # --> Refresh Clicked, Printer still not found ==> Printer not in Setup Mode
-                            # --> Couldn't Add Printer Image Found, Cannot Ping ==> FAILURE!!! Printer not on NW
-                            # --> Printer on NW but not added ==> FAILURE!!! Printer on NW
+                            # -> Refresh Image not found
+                            # ==> Script Failure, Refresh Button wasn't clicked
+                            # -> Refresh Clicked, Printer still not found
+                            # ==> Printer not in Setup Mode
+                            # -> Couldn't Add Printer Image Found, Cannot Ping
+                            # ==> FAILURE!!! Printer not on NW
+                            # -> Printer on NW but not added
+                            # ==> FAILURE!!! Printer on NW
                             print_add_pic = '''print_add_pic: clicked succussfully'''
                             refresh_pic = 'refresh: clicked succussfully'
                             if fileNowOpen.find(print_add_pic) != -1:
