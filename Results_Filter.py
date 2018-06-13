@@ -85,15 +85,16 @@ def result_filter(path_provided, keyword_success, keyword_total, test, folder):
                                         print_time = (
                                             line.split("print time: ")[1])
                                         result_file.writelines(
-                                            file + ', 1, Print Time: '
+                                            file + ', 1, '
                                             + print_time)
-                            if fileNowOpen.find("TimeToConn:") != -1:
+                                        break
+                            elif fileNowOpen.find("TimeToConn:") != -1:
                                 for line in openfile:
                                     if "TimeToConn:" in line:
                                         conn_time = (
                                             line.split("TimeToConn: ")[1])
                                         result_file.writelines(
-                                            file + ', 1, Time to Connect: '
+                                            file + ', 1, '
                                             + conn_time)
                                         break
                             else:
@@ -110,24 +111,27 @@ def result_filter(path_provided, keyword_success, keyword_total, test, folder):
                             # ==> FAILURE!!! Printer not on NW
                             # -> Printer on NW but not added
                             # ==> FAILURE!!! Printer on NW
-                            print_add_pic = ('print_add_pic: '
-                                             'clicked succussfully')
-                            refresh_pic = ('refresh: clicked succussfully')
-                            if fileNowOpen.find(print_add_pic) != -1:
-                                failReason = (
-                                    'ADD PRINTER FAILED - FAILURE!!!')
-                                actual_failure += 1
-                            else:
-                                if fileNowOpen.find(refresh_pic) != -1:
-                                    failReason = ('PRINTER NOT IN SETUP MODE'
-                                                  ' - NETWORK RESTORE FAIL!!!')
-                                    net_restore_error += 1
-                                    total -= 1
+                            if keyword_success == listOfKeys["inOS_success"]:
+                                print_add_pic = ('print_add_pic: '
+                                                 'clicked succussfully')
+                                refresh_pic = ('refresh: clicked succussfully')
+                                if fileNowOpen.find(print_add_pic) != -1:
+                                    failReason = (
+                                        'ADD PRINTER FAILED - FAILURE!!!')
+                                    actual_failure += 1
                                 else:
-                                    failReason = ('REFRESH BUTTON WASN\'T'
-                                                  ' CLICKED - SCRIPT ERROR!!!')
-                                    script_error += 1
-                                    total -= 1
+                                    if fileNowOpen.find(refresh_pic) != -1:
+                                        failReason = ('PRINTER NOT IN SETUP '
+                                                      'MODE - NETWORK RESTORE'
+                                                      ' FAIL!!!')
+                                        net_restore_error += 1
+                                        total -= 1
+                                    else:
+                                        failReason = ('REFRESH BUTTON WASN\'T'
+                                                      ' CLICKED - SCRIPT'
+                                                      ' ERROR!!!')
+                                        script_error += 1
+                                        total -= 1
                             result_file.writelines(
                                 file + ', 0, ' + failReason + '\n')
 
